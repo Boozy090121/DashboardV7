@@ -1,5 +1,5 @@
 [build]
-  command = "node preprocess-excel.js && CI=false TSC_COMPILE_ON_ERROR=true DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build"
+  command = "node debug-preprocess.js && CI=false TSC_COMPILE_ON_ERROR=true DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build"
   publish = "build"
 
 [build.environment]
