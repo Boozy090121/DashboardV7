@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index-css.css';
-import ContextWrapper from './ContextWrapper';
+import AppWithContext from './AppWithContext';
 
 // Initialize the application with React 18 syntax
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ContextWrapper />
+    <AppWithContext />
   </React.StrictMode>
 ); 
