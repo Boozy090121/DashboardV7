@@ -101,8 +101,8 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
           }
         }));
 
-        console.log("Attempting to fetch complete-data.json from:", '/data/complete-data.json');
-        const response = await fetch('/data/complete-data.json');
+        console.log("Attempting to fetch complete-data.json from:", `${window.location.origin}/data/complete-data.json`);
+        const response = await fetch(`${window.location.origin}/data/complete-data.json`);
         console.log("Response status:", response.status);
         
         if (!response.ok) {
@@ -175,7 +175,8 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
           }));
 
           // Fetch the JSON file
-          const response = await fetch(`/data/${file.name}`);
+          console.log(`Attempting to fetch ${file.name} from:`, `${window.location.origin}/data/${file.name}`);
+          const response = await fetch(`${window.location.origin}/data/${file.name}`);
           if (!response.ok) {
             throw new Error(`Failed to load ${file.name}: ${response.statusText}`);
           }
