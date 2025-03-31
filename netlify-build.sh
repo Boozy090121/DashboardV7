@@ -6,6 +6,11 @@ echo "NPM version: $(npm -v)"
 echo "Current directory: $(pwd)"
 echo "Directory contents: $(ls -la)"
 
+# Clean any previous build artifacts
+echo "Cleaning previous build artifacts..."
+rm -rf build
+rm -rf node_modules/.cache
+
 # Step 1: Run preprocessor script
 echo "Running preprocessor script..."
 node debug-preprocess.js || echo "Preprocessor script failed but continuing..."

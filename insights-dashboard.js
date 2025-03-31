@@ -1,6 +1,6 @@
 import React from 'react';
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, ScatterChart, Scatter } from 'recharts';
-import { useDataContext } from './DataContext';
+import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { useDataContext } from './DataContext.js';
 
 const InsightsDashboard = () => {
   const { data, isLoading, error } = useDataContext();

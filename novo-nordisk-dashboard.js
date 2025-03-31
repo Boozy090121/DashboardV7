@@ -11,7 +11,7 @@ import InsightsDashboard from './insights-dashboard.js';
 import LotAnalytics from './lot-analytics.js';
 
 // Import data context provider from the separate context file
-import { useDataContext } from './DataContext';
+import { useDataContext } from './DataContext.js';
 
 // Define missing components
 const LoadingState = () => (

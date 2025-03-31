@@ -1,10 +1,14 @@
 import React from 'react';
 import NovoNordiskDashboard from './novo-nordisk-dashboard';
-import AppWithContext from './AppWithContext';
+import { DataProvider } from './DataContext';
 
-// Simple wrapper component to ensure proper context wrapping
+// Main App component - Directly wraps the dashboard with DataProvider
 const App = () => {
-  return <AppWithContext />;
+  return (
+    <DataProvider>
+      <NovoNordiskDashboard />
+    </DataProvider>
+  );
 };
 
 export default App; 

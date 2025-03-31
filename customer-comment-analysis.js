@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-import { useDataContext } from './DataContext';
+import { useDataContext } from './DataContext.js';
 
 const CustomerCommentAnalysis = () => {
   const { data, isLoading, error } = useDataContext();

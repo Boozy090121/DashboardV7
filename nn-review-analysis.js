@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDataContext } from './DataContext';
+import { useDataContext } from './DataContext.js';
 
 const NNReviewTimeAnalysis = () => {
   const { data, isLoading, error } = useDataContext();
