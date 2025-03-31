@@ -16,6 +16,8 @@
     "lodash": "^4.17.21"
   },
   "scripts": {
+    "diagnose": "node scripts/run-data-diagnosis.js",
+    "debug-data": "node scripts/data-debugger.js",
     "generate-data": "node generate-dashboard-data.js",
     "preprocess": "node preprocess-excel.js",
     "prebuild": "npm run preprocess && npm run generate-data",
