@@ -1,9 +1,5 @@
 [build]
-  command = """
-    node debug-preprocess.js || true
-    node generate-dashboard-data.js || true
-    CI=false TSC_COMPILE_ON_ERROR=true DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build
-  """
+  command = "chmod +x netlify-build.sh && ./netlify-build.sh"
   publish = "build"
 
 [build.environment]
