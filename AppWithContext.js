@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import NovoNordiskDashboard from './novo-nordisk-dashboard.js';
-import { DataProvider } from './DataContext';
+import ContextWrapper from './ContextWrapper';
 
 // All-in-one component that combines everything
 const AppWithContext = () => {
@@ -121,12 +120,8 @@ const AppWithContext = () => {
     refreshData: loadData
   };
 
-  // Render the provider and dashboard
-  return (
-    <DataProvider value={contextValue}>
-      <NovoNordiskDashboard />
-    </DataProvider>
-  );
+  // Render the ContextWrapper with our context value
+  return <ContextWrapper contextValue={contextValue} />;
 };
 
 export default AppWithContext; 

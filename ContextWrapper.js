@@ -1,11 +1,15 @@
 import React from 'react';
-import { DataProvider } from './data-context-provider';
-import NovoNordiskDashboard from './novo-nordisk-dashboard';
+import { DataProvider } from './DataContext';
+import NovoNordiskDashboard from './novo-nordisk-dashboard.js';
 
-// This is a simple wrapper that makes sure the dashboard is properly wrapped with DataProvider
-const ContextWrapper = () => {
+/**
+ * ContextWrapper - A simpler alternative to AppWithContext
+ * This component ensures that all dashboard components are wrapped
+ * with the DataProvider from DataContext.js.
+ */
+const ContextWrapper = ({ contextValue }) => {
   return (
-    <DataProvider>
+    <DataProvider value={contextValue}>
       <NovoNordiskDashboard />
     </DataProvider>
   );
