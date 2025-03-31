@@ -16,8 +16,9 @@
     "lodash": "^4.17.21"
   },
   "scripts": {
+    "generate-data": "node generate-dashboard-data.js",
     "preprocess": "node preprocess-excel.js",
-    "prebuild": "npm run preprocess",
+    "prebuild": "npm run preprocess && npm run generate-data",
     "start": "react-scripts start",
     "build": "CI=false TSC_COMPILE_ON_ERROR=true DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",

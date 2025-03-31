@@ -1,18 +1,6 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import NovoNordiskDashboard from './novo-nordisk-dashboard.js';
-
-// Create a context with default values
-const DataContext = createContext({
-  isLoading: true,
-  error: null,
-  data: null,
-  lastUpdated: null,
-  fileStatus: {},
-  refreshData: () => {}
-});
-
-// Custom hook to use the data context
-export const useDataContext = () => useContext(DataContext);
+import { DataProvider } from './DataContext';
 
 // All-in-one component that combines everything
 const AppWithContext = () => {
@@ -42,15 +30,27 @@ const AppWithContext = () => {
         }
       }));
 
-      // Fetch data
-      try {
-        const response = await fetch(`${window.location.origin}/data/complete-data.json`);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to load data: ${response.statusText}`);
+      // Fetch data with a retry mechanism
+      const fetchWithRetry = async (url, retries = 3, delay = 1000) => {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Failed to load data: ${response.statusText} (${response.status})`);
+          }
+          return await response.json();
+        } catch (error) {
+          if (retries > 0) {
+            console.log(`Retrying fetch... (${retries} attempts left)`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            return fetchWithRetry(url, retries - 1, delay * 1.5);
+          }
+          throw error;
         }
-        
-        const jsonData = await response.json();
+      };
+      
+      try {
+        // First try the preferred location
+        const jsonData = await fetchWithRetry(`${window.location.origin}/data/complete-data.json`);
         console.log("Successfully loaded complete data");
         
         // Update state with the loaded data
@@ -64,18 +64,37 @@ const AppWithContext = () => {
           }
         });
       } catch (error) {
-        console.error("Error loading data:", error);
+        console.error("Error loading data from primary source:", error);
         
-        // Set the error state without generating mock data
-        setDataState({
-          isLoading: false,
-          error: `Error loading data: ${error.message}`,
-          data: null,
-          lastUpdated: new Date(),
-          fileStatus: {
-            "complete-data.json": { loaded: false, status: 'error', error: error.message }
-          }
-        });
+        // Try fallback location
+        try {
+          console.log("Attempting to load from fallback location...");
+          const jsonData = await fetchWithRetry(`${window.location.origin}/complete-data.json`);
+          console.log("Successfully loaded data from fallback location");
+          
+          setDataState({
+            isLoading: false,
+            error: null,
+            data: jsonData,
+            lastUpdated: new Date(),
+            fileStatus: {
+              "complete-data.json": { loaded: true, status: 'success' }
+            }
+          });
+        } catch (fallbackError) {
+          console.error("Error loading data from fallback location:", fallbackError);
+          
+          // Set the error state without generating mock data
+          setDataState({
+            isLoading: false,
+            error: `Error loading data: ${error.message}. Fallback also failed: ${fallbackError.message}`,
+            data: null,
+            lastUpdated: new Date(),
+            fileStatus: {
+              "complete-data.json": { loaded: false, status: 'error', error: error.message }
+            }
+          });
+        }
       }
     } catch (error) {
       console.error("Top-level error:", error);
@@ -104,9 +123,9 @@ const AppWithContext = () => {
 
   // Render the provider and dashboard
   return (
-    <DataContext.Provider value={contextValue}>
+    <DataProvider value={contextValue}>
       <NovoNordiskDashboard />
-    </DataContext.Provider>
+    </DataProvider>
   );
 };
 

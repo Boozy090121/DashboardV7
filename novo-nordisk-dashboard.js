@@ -3,15 +3,15 @@ import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianG
 import { FileText, AlertTriangle, Clock, CheckCircle, BarChart2, Activity, Settings, Search, ChevronRight } from 'lucide-react';
 
 // Import our specialized components
-import FormErrorAnalysis from './form-error-analysis';
-import NNReviewTimeAnalysis from './nn-review-analysis';
-import CustomerCommentAnalysis from './customer-comment-analysis';
-import ProcessFlowVisualization from './process-flow-visualization';
-import InsightsDashboard from './insights-dashboard';
-import LotAnalytics from './lot-analytics';
+import FormErrorAnalysis from './form-error-analysis.js';
+import NNReviewTimeAnalysis from './nn-review-analysis.js';
+import CustomerCommentAnalysis from './customer-comment-analysis.js';
+import ProcessFlowVisualization from './process-flow-visualization.js';
+import InsightsDashboard from './insights-dashboard.js';
+import LotAnalytics from './lot-analytics.js';
 
-// Import data context provider
-import { useDataContext } from './AppWithContext';
+// Import data context provider from the separate context file
+import { useDataContext } from './DataContext';
 
 // Define missing components
 const LoadingState = () => (
