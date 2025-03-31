@@ -11,23 +11,20 @@ echo "Running preprocessor script..."
 node debug-preprocess.js || echo "Preprocessor script failed but continuing..."
 
 # Step 2: Generate dashboard data
-echo "Generating dashboard data..."
-node generate-dashboard-data.js || echo "Data generation failed but continuing..."
+echo "Generating dashboard data from Excel files..."
+node generate-dashboard-data.js
 
-# Step 3: Verify public directory exists
-if [ ! -d "./public" ]; then
-  echo "Creating public directory..."
-  mkdir -p ./public/data
-fi
-
-# Step 4: Create minimal data file if it doesn't exist
+# Step 3: Verify data was generated
 if [ ! -f "./public/data/complete-data.json" ]; then
-  echo "Creating minimal data file..."
-  echo '{"overview":{"stats":{"totalRecords":1000,"totalLots":50,"overallRFTRate":90},"rftPerformance":[{"name":"Passed","value":900},{"name":"Failed","value":100}]}}' > ./public/data/complete-data.json
-  cp ./public/data/complete-data.json ./public/complete-data.json
+  echo "ERROR: Data generation failed - no complete-data.json found!"
+  exit 1
 fi
 
-# Step 5: Build React app
+echo "Data generated successfully!"
+echo "Data file contents preview:"
+head -n 20 ./public/data/complete-data.json
+
+# Step 4: Build React app
 echo "Building React app..."
 CI=false TSC_COMPILE_ON_ERROR=true DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build
 
